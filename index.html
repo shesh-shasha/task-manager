@@ -2,20 +2,78 @@
 <html>
 <head>
   <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 70%;
+      padding: 8px;
+    }
+
+    button {
+      padding: 8px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    li {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .delete {
+      background: red;
+    }
+  </style>
 </head>
+
 <body>
-  <h2>Task Manager</h2>
-  <input id="taskInput" placeholder="Enter task">
-  <button onclick="addTask()">Add</button>
-  <ul id="list"></ul>
+  <div class="container">
+    <h2>Task Manager</h2>
+    <input id="taskInput" placeholder="Enter task">
+    <button onclick="addTask()">Add</button>
+    <ul id="list"></ul>
+  </div>
 
   <script>
     function addTask() {
       let task = document.getElementById("taskInput").value;
+      if (task === "") return;
+
       let li = document.createElement("li");
-      li.innerText = task;
-      li.onclick = () => li.style.textDecoration = "line-through";
+      li.innerHTML = task + ' <button class="delete" onclick="deleteTask(this)">X</button>';
+
+      li.onclick = function() {
+        li.style.textDecoration = "line-through";
+      }
+
       document.getElementById("list").appendChild(li);
+      document.getElementById("taskInput").value = "";
+    }
+
+    function deleteTask(btn) {
+      btn.parentElement.remove();
     }
   </script>
 </body>
